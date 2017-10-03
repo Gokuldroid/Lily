@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+group='com.github.gokuldroid'
+
 android {
     compileSdkVersion 25
     buildToolsVersion rootProject.ext.build_tools_version
