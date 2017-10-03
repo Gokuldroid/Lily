@@ -1,4 +1,4 @@
-package me.tuple.lilypref;
+package me.tuple.lily;
 
 import org.junit.Test;
 
