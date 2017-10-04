@@ -13,23 +13,21 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.support.annotation.*
-import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
-
 
 /**
  * Created by LazyLoop.
  */
 
-public val Context.layoutInflater: LayoutInflater
+val Context.layoutInflater: LayoutInflater
     get() = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-public val Context.clipboardManager: ClipboardManager
+val Context.clipboardManager: ClipboardManager
     get() = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
-public fun Context.hasPermission(permission: String): Boolean {
+fun Context.hasPermission(permission: String): Boolean {
     return isApiBelow(Build.VERSION_CODES.M) || ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
 

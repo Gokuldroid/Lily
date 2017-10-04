@@ -1,4 +1,4 @@
-package me.tuple.lily
+package me.tuple.lily.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,6 +13,11 @@ import java.util.*
  */
 @SuppressLint("CommitPrefEdits")
 class Prefs(context: Context, name: String) {
+
+    constructor(function: Prefs.() -> Unit) : this(Contexter.context, defaultPrefName) {
+        function(this)
+    }
+
     val preferences: SharedPreferences by lazy {
         context.getSharedPreferences(name, Context.MODE_PRIVATE)
     }
@@ -135,17 +140,17 @@ class Prefs(context: Context, name: String) {
     }
 
     companion object {
-        val instance: Prefs by lazy {
-            Prefs(Contexter.context, defaultPrefName) as Prefs
+        val defaultPreference: Prefs by lazy {
+            Prefs(Contexter.context, defaultPrefName)
         }
-
+        
         val defaultPrefName: String by lazy {
             PreferenceManager.getDefaultSharedPreferencesName(Contexter.context)
         }
 
         fun instance(name: String?): Prefs {
             if (name == null) {
-                return instance
+                return defaultPreference
             }
             return Prefs(Contexter.context, name)
         }
@@ -155,11 +160,11 @@ class Prefs(context: Context, name: String) {
         }
 
         inline fun from(name: String, function: Prefs.() -> Unit) {
-            function.invoke(this.instance(name))
+            function.invoke(instance(name))
         }
 
         inline fun fromDefault(function: Prefs.() -> Unit) {
-            function.invoke(this.instance(null))
+            function.invoke(instance(null))
         }
 
         fun fromDefault(): Prefs {

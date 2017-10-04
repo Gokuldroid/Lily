@@ -5,7 +5,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion rootProject.ext.build_tools_version
     defaultConfig {
-        applicationId "me.tuple.lily"
+        applicationId "me.tuple.lily.example"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
