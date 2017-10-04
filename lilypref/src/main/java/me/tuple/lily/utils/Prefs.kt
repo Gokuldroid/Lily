@@ -11,6 +11,14 @@ import java.util.*
  * Created by gokul on 06/04/2016.
  * This class helps to store and retrieve data form shared preferences.
  */
+
+
+inline fun SharedPreferences.use(function: SharedPreferences.Editor.() -> Unit): Boolean {
+    val editor = this.edit()
+    function.invoke(editor)
+    return editor.commit()
+}
+
 @SuppressLint("CommitPrefEdits")
 class Prefs(context: Context, name: String) {
 
@@ -22,78 +30,43 @@ class Prefs(context: Context, name: String) {
         context.getSharedPreferences(name, Context.MODE_PRIVATE)
     }
 
-    operator fun set(key: String, value: Boolean): Boolean {
-        return preferences.edit()
-                .putBoolean(key, value)
-                .commit()
+    operator fun set(key: String, value: Any?): Boolean {
+        if (value == null) {
+            return remove(key)
+        }
+        return preferences.use {
+            when (value) {
+                is String -> putString(key, value)
+                is Boolean -> putBoolean(key, value)
+                is Int -> putInt(key, value)
+                is Long -> putLong(key, value)
+                is Set<*> -> {
+                    putStringSet(key, value as MutableSet<String>?)
+                }
+                else -> throw IllegalArgumentException("Unknown Type for preference")
+            }
+        }
     }
 
-    operator fun set(key: String, value: Int): Boolean {
-        return preferences.edit()
-                .putInt(key, value)
-                .commit()
-    }
-
-    operator fun set(key: String, value: Long): Boolean {
-        return preferences.edit()
-                .putLong(key, value)
-                .commit()
-    }
-
-    operator fun set(key: String, value: Float): Boolean {
-        return preferences.edit()
-                .putFloat(key, value)
-                .commit()
-    }
-
-    operator fun set(key: String, value: String): Boolean {
-        return preferences.edit()
-                .putString(key, value)
-                .commit()
-    }
-
-    operator fun set(key: String, value: Set<String>): Boolean {
-        return preferences.edit()
-                .putStringSet(key, value)
-                .commit()
-    }
-
-    fun setAndGet(key: String, value: Boolean): Boolean {
-        preferences.edit()
-                .putBoolean(key, value)
-                .commit()
+    fun setAndGet(key: String, value: Any?): Any? {
+        if (value == null) {
+            remove(key)
+            return null
+        }
+        preferences.use {
+            when (value) {
+                is String -> putString(key, value)
+                is Boolean -> putBoolean(key, value)
+                is Int -> putInt(key, value)
+                is Long -> putLong(key, value)
+                is Set<*> -> {
+                    putStringSet(key, value as Set<String>?)
+                }
+                else -> throw IllegalArgumentException("Unknown Type for preference")
+            }
+        }
         return value
     }
-
-
-    fun setAndGet(key: String, value: Int): Int {
-        preferences.edit()
-                .putInt(key, value)
-                .commit()
-        return value
-    }
-
-    fun setAndGet(key: String, value: Long): Long {
-        preferences.edit()
-                .putLong(key, value)
-                .commit()
-        return value
-    }
-
-    fun setAndGet(key: String, value: Float): Float {
-        preferences.edit()
-                .putFloat(key, value)
-                .commit()
-        return value
-    }
-
-    fun setAndGet(key: String, value: String?): String? {
-        preferences.edit()
-                .putString(key, value)
-                .commit()
-        return value
-    }
-
 
     fun getBoolean(key: String, defaultValue: Boolean): Boolean {
         return preferences.getBoolean(key, defaultValue)
@@ -124,15 +97,15 @@ class Prefs(context: Context, name: String) {
         get() = preferences.all
 
     fun remove(key: String): Boolean {
-        return preferences.edit()
-                .remove(key)
-                .commit()
+        return preferences.use {
+            remove(key)
+        }
     }
 
     fun clear(): Boolean {
-        return preferences.edit()
-                .clear()
-                .commit()
+        return preferences.use {
+            clear()
+        }
     }
 
     operator fun contains(key: String): Boolean {
@@ -143,7 +116,7 @@ class Prefs(context: Context, name: String) {
         val defaultPreference: Prefs by lazy {
             Prefs(Contexter.context, defaultPrefName)
         }
-        
+
         val defaultPrefName: String by lazy {
             PreferenceManager.getDefaultSharedPreferencesName(Contexter.context)
         }
@@ -172,4 +145,3 @@ class Prefs(context: Context, name: String) {
         }
     }
 }
-
