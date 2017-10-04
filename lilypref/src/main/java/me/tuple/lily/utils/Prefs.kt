@@ -20,6 +20,7 @@ inline fun SharedPreferences.use(function: SharedPreferences.Editor.() -> Unit):
 }
 
 @SuppressLint("CommitPrefEdits")
+@Suppress("Unused")
 class Prefs(context: Context, name: String) {
 
     constructor(function: Prefs.() -> Unit) : this(Contexter.context, defaultPrefName) {
@@ -30,11 +31,11 @@ class Prefs(context: Context, name: String) {
         context.getSharedPreferences(name, Context.MODE_PRIVATE)
     }
 
+    @Suppress("UNCHECKED_CAST")
     operator fun set(key: String, value: Any?): Boolean {
-        if (value == null) {
-            return remove(key)
-        }
-        return preferences.use {
+        return if (value == null)
+            remove(key)
+        else preferences.use {
             when (value) {
                 is String -> putString(key, value)
                 is Boolean -> putBoolean(key, value)
@@ -49,22 +50,7 @@ class Prefs(context: Context, name: String) {
     }
 
     fun setAndGet(key: String, value: Any?): Any? {
-        if (value == null) {
-            remove(key)
-            return null
-        }
-        preferences.use {
-            when (value) {
-                is String -> putString(key, value)
-                is Boolean -> putBoolean(key, value)
-                is Int -> putInt(key, value)
-                is Long -> putLong(key, value)
-                is Set<*> -> {
-                    putStringSet(key, value as Set<String>?)
-                }
-                else -> throw IllegalArgumentException("Unknown Type for preference")
-            }
-        }
+        set(key, value)
         return value
     }
 
@@ -113,19 +99,16 @@ class Prefs(context: Context, name: String) {
     }
 
     companion object {
-        val defaultPreference: Prefs by lazy {
+        private val defaultPreference: Prefs by lazy {
             Prefs(Contexter.context, defaultPrefName)
         }
 
-        val defaultPrefName: String by lazy {
+        private val defaultPrefName: String by lazy {
             PreferenceManager.getDefaultSharedPreferencesName(Contexter.context)
         }
 
         fun instance(name: String?): Prefs {
-            if (name == null) {
-                return defaultPreference
-            }
-            return Prefs(Contexter.context, name)
+            return if (name == null) defaultPreference else Prefs(Contexter.context, name)
         }
 
         fun from(name: String): Prefs {
@@ -145,3 +128,6 @@ class Prefs(context: Context, name: String) {
         }
     }
 }
+
+val Context.defaultPreference : Prefs
+    get() = Prefs.fromDefault()
