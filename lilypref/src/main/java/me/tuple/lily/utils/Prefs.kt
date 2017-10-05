@@ -54,29 +54,28 @@ class Prefs(context: Context, name: String) {
         return value
     }
 
-    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
+    fun getBoolean(key: String, defaultValue: Boolean = false): Boolean {
         return preferences.getBoolean(key, defaultValue)
     }
 
-    fun getInt(key: String, defaultValue: Int): Int {
+    fun getInt(key: String, defaultValue: Int = 0): Int {
         return preferences.getInt(key, defaultValue)
     }
 
-    fun getLong(key: String, defaultValue: Long): Long {
+    fun getLong(key: String, defaultValue: Long = 0): Long {
         return preferences.getLong(key, defaultValue)
     }
 
-    fun getFloat(key: String, defaultValue: Float): Float {
+    fun getFloat(key: String, defaultValue: Float = 0f): Float {
         return preferences.getFloat(key, defaultValue)
     }
 
-    fun getString(key: String, defaultValue: String): String? {
+    fun getString(key: String, defaultValue: String? = null): String? {
         return preferences.getString(key, defaultValue)
     }
 
-    fun getStringSet(key: String): Set<String>? {
-        val set = HashSet<String>()
-        return preferences.getStringSet(key, set)
+    fun getStringSet(key: String, defaultValue: HashSet<String>? = null): Set<String>? {
+        return preferences.getStringSet(key, defaultValue)
     }
 
     val map: Map<String, *>
@@ -126,8 +125,43 @@ class Prefs(context: Context, name: String) {
         fun fromDefault(): Prefs {
             return instance(null)
         }
+
+        @Suppress("UNCHECKED_CAST")
+        operator fun set(key: String, value: Any?): Boolean {
+            return defaultPreference.set(key, value)
+        }
+
+        fun setAndGet(key: String, value: Any?): Any? {
+            set(key, value)
+            return value
+        }
+
+        fun getBoolean(key: String, defaultValue: Boolean = false): Boolean {
+            return defaultPreference.getBoolean(key, defaultValue)
+        }
+
+        fun getInt(key: String, defaultValue: Int = 0): Int {
+            return defaultPreference.getInt(key, defaultValue)
+        }
+
+        fun getLong(key: String, defaultValue: Long = 0): Long {
+            return defaultPreference.getLong(key, defaultValue)
+        }
+
+        fun getFloat(key: String, defaultValue: Float = 0f): Float {
+            return defaultPreference.getFloat(key, defaultValue)
+        }
+
+        fun getString(key: String, defaultValue: String? = null): String? {
+            return defaultPreference.getString(key, defaultValue)
+        }
+
+        fun getStringSet(key: String, defaultValue: HashSet<String>? = null): Set<String>? {
+            val set = HashSet<String>()
+            return defaultPreference.getStringSet(key, set)
+        }
     }
 }
 
-val Context.defaultPreference : Prefs
+val Context.defaultPreference: Prefs
     get() = Prefs.fromDefault()
