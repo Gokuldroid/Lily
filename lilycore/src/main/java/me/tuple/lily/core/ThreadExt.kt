@@ -8,7 +8,7 @@ import android.os.Looper
  */
 
 private val handler by lazy {
-    Handler(Looper.getMainLooper()) as Handler
+    Handler(Looper.getMainLooper())
 }
 
 private val mainThread: Thread by lazy {
@@ -20,19 +20,19 @@ public val Thread.isMainThread: Boolean
 
 
 public inline fun safeExecute(action: () -> Unit): Boolean {
-    try {
+    return try {
         action.invoke()
-        return true
+        true
     } catch (e: Exception) {
-        return false
+        false
     }
 }
 
 public inline fun <T> safeExecute(action: () -> T?): T? {
-    try {
-        return action.invoke()
+    return try {
+        action.invoke()
     } catch (e: Exception) {
-        return null
+        null
     }
 }
 

@@ -28,20 +28,17 @@ val Context.clipboardManager: ClipboardManager
     get() = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
 fun Context.hasPermission(permission: String): Boolean {
-    return isApiBelow(Build.VERSION_CODES.M) || ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+    return isApiBelow(AndroidVersion.M) || ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
 
 fun Context.hasStoragePermission(): Boolean {
     return hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 }
 
-fun Context.hasSettingsPermission(): Boolean {
-    return hasPermission(Manifest.permission.WRITE_SETTINGS)
-}
+fun Context.hasSettingsPermission(): Boolean = hasPermission(Manifest.permission.WRITE_SETTINGS)
 
-fun Context.filterNotGrantedPermission(permissions: Array<String>): Array<String> {
-    return permissions.filter { !hasPermission(it) }.toTypedArray()
-}
+fun Context.filterNotGrantedPermission(permissions: Array<String>): Array<String> =
+        permissions.filter { !hasPermission(it) }.toTypedArray()
 
 fun Context.openAppDetailsActivity() {
     val i = Intent()
@@ -78,37 +75,23 @@ object Contexter {
         return Math.round(pixels * (DisplayMetrics.DENSITY_DEFAULT.toFloat() / metrics.densityDpi))
     }
 
-    fun getColor(@ColorRes colorId: Int): Int {
-        return ContextCompat.getColor(context, colorId)
-    }
+    fun getColor(@ColorRes colorId: Int): Int = ContextCompat.getColor(context, colorId)
 
-    fun getBoolean(@BoolRes boolId: Int): Boolean {
-        return resources.getBoolean(boolId)
-    }
+    fun getBoolean(@BoolRes boolId: Int): Boolean = resources.getBoolean(boolId)
 
-    fun getString(@StringRes stringId: Int): String {
-        return resources.getString(stringId)
-    }
+    fun getString(@StringRes stringId: Int): String = resources.getString(stringId)
 
-    fun getString(@StringRes stringId: Int,vararg params:Any): String {
-        return resources.getString(stringId,params)
-    }
+    fun getString(@StringRes stringId: Int,vararg params:Any): String =
+            resources.getString(stringId,params)
 
-    fun getInt(@IntegerRes intId: Int): Int {
-        return resources.getInteger(intId)
-    }
+    fun getInt(@IntegerRes intId: Int): Int = resources.getInteger(intId)
 
-    fun getDrawable(@DrawableRes icDrawable: Int): Drawable {
-        return ContextCompat.getDrawable(context, icDrawable)
-    }
+    fun getDrawable(@DrawableRes icDrawable: Int): Drawable =
+            ContextCompat.getDrawable(context, icDrawable)
 
-    fun getColorDrawable(@ColorRes color: Int): ColorDrawable {
-        return ColorDrawable(getColor(color))
-    }
+    fun getColorDrawable(@ColorRes color: Int): ColorDrawable = ColorDrawable(getColor(color))
 
-    fun getAssets(): AssetManager {
-        return context.assets
-    }
+    fun getAssets(): AssetManager = context.assets
 }
 
 fun Int.dpToPx(): Int = Contexter.dpToPixels(this)

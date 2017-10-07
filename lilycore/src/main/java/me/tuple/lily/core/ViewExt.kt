@@ -13,7 +13,7 @@ import android.view.ViewGroup
 
 inline fun ViewGroup.forEach(a: (View) -> Unit) {
     val count = this.childCount
-    for (i in 0..count - 1) {
+    for (i in 0 until count) {
         a(this.getChildAt(i))
     }
 }
