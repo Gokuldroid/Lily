@@ -1,1 +1,1 @@
-include ':app', ':lilycore', ':lilypref'
+include ':app', ':lilycore', ':lilypref', ':lilytoast'

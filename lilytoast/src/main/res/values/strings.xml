@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">lilytoast</string>
+    <string name="toasty_undo_message">Undo</string>
+</resources>

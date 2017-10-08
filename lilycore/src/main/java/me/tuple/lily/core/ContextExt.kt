@@ -10,12 +10,13 @@ import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.provider.Settings
 import android.support.annotation.*
 import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.LayoutInflater
+
 
 /**
  * Created by LazyLoop.
@@ -81,17 +82,54 @@ object Contexter {
 
     fun getString(@StringRes stringId: Int): String = resources.getString(stringId)
 
-    fun getString(@StringRes stringId: Int,vararg params:Any): String =
-            resources.getString(stringId,params)
+    fun getString(@StringRes stringId: Int, vararg params: Any): String =
+            resources.getString(stringId, params)
 
     fun getInt(@IntegerRes intId: Int): Int = resources.getInteger(intId)
 
     fun getDrawable(@DrawableRes icDrawable: Int): Drawable =
             ContextCompat.getDrawable(context, icDrawable)
 
+    fun getDimension(@DimenRes dimensionId: Int) =
+            resources.getDimension(dimensionId).toInt()
+
     fun getColorDrawable(@ColorRes color: Int): ColorDrawable = ColorDrawable(getColor(color))
 
     fun getAssets(): AssetManager = context.assets
+
+    @ColorInt
+    fun resolveColor(context: Context, @AttrRes attr: Int, fallback: Int): Int {
+        val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
+        try {
+            return a.getColor(0, fallback)
+        } finally {
+            a.recycle()
+        }
+    }
+
+    fun resolveBoolean(context: Context, @AttrRes attr: Int, fallback: Boolean = false): Boolean {
+        val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
+        try {
+            return a.getBoolean(0, fallback)
+        } finally {
+            a.recycle()
+        }
+    }
+
+    fun resolveString(context: Context, @AttrRes attr: Int): String {
+        val v = TypedValue()
+        context.theme.resolveAttribute(attr, v, true)
+        return v.string as String
+    }
+
+    fun resolveDimension(context: Context, @AttrRes attr: Int, fallback: Int): Int {
+        val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
+        try {
+            return a.getDimensionPixelSize(0, fallback)
+        } finally {
+            a.recycle()
+        }
+    }
 }
 
 fun Int.dpToPx(): Int = Contexter.dpToPixels(this)
