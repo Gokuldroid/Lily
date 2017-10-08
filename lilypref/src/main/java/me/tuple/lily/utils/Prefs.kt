@@ -97,7 +97,7 @@ class Prefs(context: Context, name: String) {
         }
 
         private val defaultPrefName: String by lazy {
-            Contexter.context.packageName + "_preferences";
+            Contexter.context.packageName + "_preferences"
         }
 
         fun instance(name: String?): Prefs =
@@ -162,7 +162,7 @@ inline fun <reified T, P> delegate(key: String, defaultValue: T, prefs: Prefs): 
                         else -> throw UnsupportedOperationException("Not yet implemented")
                     }
 
-            override fun setValue(thisRef: P, property: KProperty<*>, value: T): Unit {
+            override fun setValue(thisRef: P, property: KProperty<*>, value: T) {
                 Prefs[key] = value
             }
         }

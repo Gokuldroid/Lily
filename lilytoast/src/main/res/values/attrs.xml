@@ -4,4 +4,9 @@
     <attr name="toasty_font_size" format="dimension" />
     <attr name="toasty_font" format="string" />
     <attr name="toasty_font_color" format="color" />
+    <attr name="snacky_bg" />
+    <attr name="snacky_text_color" />
+    <attr name="snacky_title_text_color" />
+    <attr name="snacky_message_text_color" />
+    <attr name="snacky_action_text_color" />
 </resources>

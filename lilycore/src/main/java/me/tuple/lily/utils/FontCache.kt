@@ -13,15 +13,15 @@ import java.util.*
 object FontCache {
     private val fontCache = HashMap<String, Typeface>()
 
-    fun getFont(font: String?): Typeface {
-        if (font == null) {
+    fun getFont(font: String?, defaultFont: Typeface = Typeface.DEFAULT): Typeface {
+        if (font.isNullOrBlank()) {
             return Typeface.DEFAULT
         }
         if (fontCache.containsKey(font)) {
             return fontCache[font]!!
         } else {
-            val typeface: Typeface = safeExecute<Typeface> { return Typeface.createFromAsset(Contexter.getAssets(), "fonts/" + font) } ?: Typeface.DEFAULT
-            fontCache.put(font, typeface)
+            val typeface: Typeface = safeExecute<Typeface> { return Typeface.createFromAsset(Contexter.getAssets(), "fonts/" + font) } ?: defaultFont
+            fontCache.put(font!!, typeface)
             return typeface
         }
     }

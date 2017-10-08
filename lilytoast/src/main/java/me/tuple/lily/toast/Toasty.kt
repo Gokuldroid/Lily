@@ -15,7 +15,7 @@ import me.tuple.lily.utils.FontCache
 
 /**
  * Created by LazyLoop.
- */
+ * */
 
 @Suppress("Unused")
 class Toasty(private val context: Context) {
@@ -39,13 +39,6 @@ class Toasty(private val context: Context) {
 
     private var fontColor: Int? = null
 
-    constructor(context: Context, receiver: Toasty.() -> Unit) : this(context) {
-        receiver(this)
-    }
-
-    constructor(receiver: Toasty.() -> Unit) : this(Contexter.context) {
-        receiver(this)
-    }
 
     fun message(@StringRes message: Int): Toasty {
         message(context.getString(message))
@@ -115,29 +108,34 @@ class Toasty(private val context: Context) {
 
     fun show() {
         setGlobals()
+        val toast = constructToasty()
+        toast.show()
+    }
+
+    private fun constructToasty(): Toast {
         val toast = Toast(context)
         toast.duration = duration
-
         val inflater = context.layoutInflater
         val view = inflater.inflate(R.layout.toasty_layout, null)
         toast.view = view
-
-        val bgView = view.findById<CardView>(R.id.toast_bg)
-        val messageTextView = view.findById<TextView>(R.id.toasty_message)
-        val iconView = view.findById<ImageView>(R.id.toasty_icon)
-        if (icon == null) {
-            iconView.gone()
-        } else {
-            iconView.setImageResource(icon!!)
+        with(view) {
+            findById<CardView>(R.id.toast_bg).apply {
+                setCardBackgroundColor(this@Toasty.background!!)
+            }
+            findById<ImageView>(R.id.toasty_icon).apply {
+                if (icon != null) {
+                    show()
+                    setImageResource(this@Toasty.icon!!)
+                }
+            }
+            findById<TextView>(R.id.toasty_message).apply {
+                text = message
+                typeface = typeFace
+                setTextColor(fontColor!!)
+                setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize!!.toFloat())
+            }
         }
-        bgView.setCardBackgroundColor(background!!)
-        messageTextView.apply {
-            text = message
-            typeface = typeFace
-            setTextColor(fontColor!!)
-            setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize!!.toFloat())
-        }
-        toast.show()
+        return toast
     }
 
     private fun setGlobals() {
@@ -149,13 +147,13 @@ class Toasty(private val context: Context) {
 }
 
 fun toasty(message: Int) {
-    Toasty {
+    Toasty(Contexter.context).apply {
         message(message)
     }.show()
 }
 
 fun toasty(message: String) {
-    Toasty {
+    Toasty(Contexter.context).apply {
         message(message)
     }.show()
 }
