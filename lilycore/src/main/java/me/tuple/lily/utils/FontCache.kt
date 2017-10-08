@@ -1,7 +1,6 @@
 package me.tuple.lily.utils
 
 import android.graphics.Typeface
-import android.support.annotation.Nullable
 import me.tuple.lily.core.Contexter
 import me.tuple.lily.core.safeExecute
 import java.util.*
@@ -14,7 +13,10 @@ import java.util.*
 object FontCache {
     private val fontCache = HashMap<String, Typeface>()
 
-    fun getFont(font: String): Typeface {
+    fun getFont(font: String?): Typeface {
+        if (font == null) {
+            return Typeface.DEFAULT
+        }
         if (fontCache.containsKey(font)) {
             return fontCache[font]!!
         } else {

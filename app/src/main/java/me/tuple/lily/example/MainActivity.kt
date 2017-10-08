@@ -2,11 +2,12 @@ package me.tuple.lily.example
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Button
 import me.tuple.lily.core.bind
+import me.tuple.lily.core.findById
+import me.tuple.lily.core.onClick
+import me.tuple.lily.toast.Toasty
 import me.tuple.lily.utils.intPreference
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,12 +19,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var inn by intPreference("Hello")
-        button.setOnClickListener {
-            Log.d("D", "Inn ::" + inn)
-            inn = Random().nextInt(20)
-            Log.d("D", "demo ::" + deom)
-            deom++
+        onClick(R.id.click) {
+            Toasty(this) {
+                message("Hello")
+                icon(R.mipmap.ic_launcher)
+            }.show()
+        }
+        findById<Button>(R.id.click).apply {
+            setOnClickListener{
+
+            }
         }
     }
-
 }

@@ -90,15 +90,15 @@ object Contexter {
     fun getDrawable(@DrawableRes icDrawable: Int): Drawable =
             ContextCompat.getDrawable(context, icDrawable)
 
-    fun getDimension(@DimenRes dimensionId: Int) =
-            resources.getDimension(dimensionId).toInt()
+    fun getDimensionPixelSize(@DimenRes dimensionId: Int) =
+            resources.getDimensionPixelSize(dimensionId)
 
     fun getColorDrawable(@ColorRes color: Int): ColorDrawable = ColorDrawable(getColor(color))
 
     fun getAssets(): AssetManager = context.assets
 
     @ColorInt
-    fun resolveColor(context: Context, @AttrRes attr: Int, fallback: Int): Int {
+    fun resolveColor(@AttrRes attr: Int, fallback: Int): Int {
         val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
         try {
             return a.getColor(0, fallback)
@@ -107,7 +107,7 @@ object Contexter {
         }
     }
 
-    fun resolveBoolean(context: Context, @AttrRes attr: Int, fallback: Boolean = false): Boolean {
+    fun resolveBoolean(@AttrRes attr: Int, fallback: Boolean = false): Boolean {
         val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
         try {
             return a.getBoolean(0, fallback)
@@ -116,13 +116,15 @@ object Contexter {
         }
     }
 
-    fun resolveString(context: Context, @AttrRes attr: Int): String {
+    fun resolveString(@AttrRes attr: Int): String? {
         val v = TypedValue()
-        context.theme.resolveAttribute(attr, v, true)
-        return v.string as String
+        if (context.theme.resolveAttribute(attr, v, true)) {
+            return v.string as String
+        }
+        return null
     }
 
-    fun resolveDimension(context: Context, @AttrRes attr: Int, fallback: Int): Int {
+    fun resolveDimension(@AttrRes attr: Int, fallback: Int): Int {
         val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
         try {
             return a.getDimensionPixelSize(0, fallback)

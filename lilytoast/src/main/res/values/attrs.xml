@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <attr name="toasty_bg" format="color" />
+    <attr name="toasty_font_size" format="dimension" />
+    <attr name="toasty_font" format="string" />
+    <attr name="toasty_font_color" format="color" />
+</resources>
