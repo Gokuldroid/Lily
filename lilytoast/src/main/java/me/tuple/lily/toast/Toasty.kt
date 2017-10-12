@@ -122,12 +122,14 @@ class Toasty(private val context: Context) {
             findById<CardView>(R.id.toast_bg).apply {
                 setCardBackgroundColor(this@Toasty.background!!)
             }
-            findById<ImageView>(R.id.toasty_icon).apply {
-                if (icon != null) {
+
+            if (icon != null) {
+                findById<ImageView>(R.id.toasty_icon).apply {
                     show()
                     setImageResource(this@Toasty.icon!!)
                 }
             }
+
             findById<TextView>(R.id.toasty_message).apply {
                 text = message
                 typeface = typeFace
