@@ -1,7 +1,14 @@
 package me.tuple.lily.core
 
+import android.app.Activity
+import android.app.Fragment
 import android.os.Handler
 import android.os.Looper
+import java.lang.ref.WeakReference
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import android.support.v4.app.Fragment as SupportFragment
 
 /**
  * Created by LazyLoop.
@@ -36,29 +43,52 @@ public inline fun <T> safeExecute(action: () -> T?): T? {
     }
 }
 
-fun runOnUI(action: () -> Unit) {
-    if (Thread.currentThread().isMainThread) {
-        action()
-    } else {
-        handler.post {
-            action()
+fun AsyncContext.runOnUI(action: () -> Unit) {
+    weakRef.get()?.also {
+        if (!isDisposed) {
+            if (Thread.currentThread().isMainThread) {
+                action()
+            } else {
+                handler.post {
+                    action()
+                }
+            }
         }
     }
 }
 
-fun async(action: () -> Unit) {
-    Thread(action).start()
+fun <T> Any.async(action: AsyncContext.() -> T): Future<T> {
+    val asyncContext = AsyncContext(WeakReference(this))
+    return BackgroundExecutor.submit {
+        action.invoke(asyncContext)
+    }
 }
 
-fun disposableAsync(action: (Disposable) -> Unit): Disposable {
-    val disposable = Disposable()
-    action.invoke(disposable)
-    return disposable
-}
+class AsyncContext(val weakRef: WeakReference<Any>) {
+    @Volatile
+    var isDisposed = false
+        get() {
+            val context = weakRef.get() ?: return true
+            if (context is Activity && context.isFinishing) {
+                return true
+            }
+            if (context is Fragment && context.isDetached) {
+                return true
+            }
+            if (context is SupportFragment && context.isDetached) {
+                return true
+            }
+            return false
+        }
 
-class Disposable {
-    @Volatile var isDisposed: Boolean = false
-    fun dispose(): Unit {
+    fun dispose() {
         isDisposed = true
     }
+}
+
+internal object BackgroundExecutor {
+    private var executor: ExecutorService =
+            Executors.newScheduledThreadPool(2 * Runtime.getRuntime().availableProcessors())
+
+    fun <T> submit(task: () -> T): Future<T> = executor.submit(task)
 }

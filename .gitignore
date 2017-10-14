@@ -8,3 +8,4 @@
 /captures
 .externalNativeBuild
 /commit.bat
+/app/src/main/java/me/tuple/lily/example/DemoFragment.kt
