@@ -17,12 +17,13 @@ object FontCache {
         if (font.isNullOrBlank()) {
             return Typeface.DEFAULT
         }
-        if (fontCache.containsKey(font)) {
-            return fontCache[font]!!
+        return if (fontCache.containsKey(font)) {
+            fontCache[font]!!
         } else {
-            val typeface: Typeface = safeExecute<Typeface> { return Typeface.createFromAsset(Contexter.getAssets(), "fonts/" + font) } ?: defaultFont
-            fontCache.put(font!!, typeface)
-            return typeface
+            var typeface: Typeface? = null
+            safeExecute { typeface = Typeface.createFromAsset(Contexter.getAssets(), "fonts/" + font) }
+            fontCache.put(font!!, typeface ?: defaultFont)
+            typeface ?: defaultFont
         }
     }
 }
