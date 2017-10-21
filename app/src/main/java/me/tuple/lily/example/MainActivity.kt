@@ -6,6 +6,7 @@ import android.widget.Button
 import me.tuple.lily.core.async
 import me.tuple.lily.core.bind
 import me.tuple.lily.core.runOnUI
+import me.tuple.lily.core.safeExecute
 import me.tuple.lily.utils.intPreference
 
 class MainActivity : AppCompatActivity() {
@@ -20,8 +21,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var inn by intPreference("Hello")
         async {
+            val result = safeExecute<String> { "Gokul" }
             runOnUI {
+                if (result.isSuccessful) {
 
+                }
             }
         }
     }

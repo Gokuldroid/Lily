@@ -35,12 +35,17 @@ public inline fun safeExecute(action: () -> Unit): Boolean {
     }
 }
 
-public inline fun <T> safeExecute(action: () -> T?): T? {
+public inline fun <T> safeExecute(action: () -> T?): ExecutionResult<T> {
     return try {
-        action.invoke()
+        ExecutionResult(action.invoke(), null)
     } catch (e: Exception) {
-        null
+        ExecutionResult(null, e)
     }
+}
+
+class ExecutionResult<out T>(val result: T?, private val exception: Exception?) {
+    var isSuccessful = false
+        get() = exception == null
 }
 
 fun AsyncContext.runOnUI(action: () -> Unit) {
