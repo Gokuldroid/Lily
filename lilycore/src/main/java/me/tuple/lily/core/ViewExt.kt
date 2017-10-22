@@ -24,6 +24,10 @@ fun View?.show() {
     this?.visibility = View.VISIBLE
 }
 
+fun View?.hide() {
+    this?.visibility = View.INVISIBLE
+}
+
 fun View?.setPadding(padding: Int) {
     this?.apply {
         this.setPadding(padding, padding, padding, padding)
