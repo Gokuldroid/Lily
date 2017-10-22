@@ -31,6 +31,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     //compile 'com.github.Gokuldroid.Lily:lilycore:master-SNAPSHOT'
     //compile 'com.github.Gokuldroid.Lily:lilypref:master-SNAPSHOT'
+    //compile 'com.github.Gokuldroid.Lily:lilytoast:master-SNAPSHOT'
     compile project(':lilycore')
     compile project(':lilypref')
     compile project(':lilytoast')

@@ -1,6 +1,7 @@
 package me.tuple.lily.core
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -41,7 +42,7 @@ fun Context.hasSettingsPermission(): Boolean = hasPermission(Manifest.permission
 fun Context.filterNotGrantedPermission(permissions: Array<String>): Array<String> =
         permissions.filter { !hasPermission(it) }.toTypedArray()
 
-fun Context.openAppDetailsActivity() {
+fun Context.openAppDetails() {
     val i = Intent()
     i.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
     i.addCategory(Intent.CATEGORY_DEFAULT)
@@ -50,6 +51,37 @@ fun Context.openAppDetailsActivity() {
     i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
     i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
     startActivity(i)
+}
+
+fun Context.openInBrowser(url: String) {
+    val intent = Intent(Intent.ACTION_VIEW,
+            Uri.parse(url))
+    intent.apply {
+        addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+        addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    startActivity(intent);
+}
+
+fun Context.getVersionName(): String {
+    safeExecute {
+        val info = this.packageManager.getPackageInfo(this.packageName, 0)
+        return info.versionName
+    }
+    return ""
+}
+
+fun Context.openInPlayStore(packageName: String) {
+    val uri = Uri.parse("market://details?id=" + packageName)
+    val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+            Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+    try {
+        this.startActivity(goToMarket)
+    } catch (e: ActivityNotFoundException) {
+        openInBrowser("http://play.google.com/store/apps/details?id=" + this.packageName)
+    }
 }
 
 object Contexter {
@@ -63,7 +95,7 @@ object Contexter {
     }
 
     fun openAppDetailsActivity() {
-        context.openAppDetailsActivity()
+        context.openAppDetails()
     }
 
     fun dpToPixels(dp: Int): Int {

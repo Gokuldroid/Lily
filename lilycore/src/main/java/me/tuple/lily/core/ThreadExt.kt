@@ -97,3 +97,5 @@ internal object BackgroundExecutor {
 
     fun <T> submit(task: () -> T): Future<T> = executor.submit(task)
 }
+
+fun safeSleep(mills: Long): Boolean = safeExecute { Thread.sleep(mills) }
