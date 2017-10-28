@@ -1,6 +1,5 @@
 package me.tuple.lily.adapter
 
-import android.support.v4.util.Pools
 import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import java.util.*
@@ -10,7 +9,8 @@ import kotlin.collections.ArrayList
 /**
  * Created by LazyLoop.
  */
-abstract class DataHolder<T, VH : RecyclerView.ViewHolder>(val adapter: RecyclerView.Adapter<VH>) {
+abstract class DataHolder<T, VH : RecyclerView.ViewHolder>() {
+    lateinit var adapter: RecyclerView.Adapter<VH>
     var selectedCount: Int = 0
     var selectedItems: SparseBooleanArray = SparseBooleanArray();
     abstract fun get(position: Int): T
