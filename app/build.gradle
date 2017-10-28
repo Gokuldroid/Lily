@@ -35,6 +35,8 @@ dependencies {
     compile project(':lilycore')
     compile project(':lilypref')
     compile project(':lilytoast')
+    compile project(':lilyadapter')
+
 }
 repositories {
     mavenCentral()
