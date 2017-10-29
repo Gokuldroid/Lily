@@ -159,3 +159,31 @@ fun toasty(message: String) {
         message(message)
     }.show()
 }
+
+fun toastyError(message: Int){
+    Toasty(Contexter.context).apply {
+        icon(R.drawable.ic_alert_circle)
+        message(message)
+    }.show()
+}
+
+fun toastyError(message: String){
+    Toasty(Contexter.context).apply {
+        message(message)
+        icon(R.drawable.ic_alert_circle)
+    }.show()
+}
+
+fun toastySuccess(message: String){
+    Toasty(Contexter.context).apply {
+        message(message)
+        icon(R.drawable.ic_check_circle)
+    }.show()
+}
+
+fun toastySuccess(message: Int){
+    Toasty(Contexter.context).apply {
+        message(message)
+        icon(R.drawable.ic_check_circle)
+    }.show()
+}
