@@ -42,7 +42,7 @@ abstract class DataHolder<T, VH : RecyclerView.ViewHolder>() {
         return false
     }
 
-    fun deselect(position: Int): Boolean {
+    fun deSelect(position: Int): Boolean {
         if (isSelectable(position) && selectedItems.get(position)) {
             selectedItems.put(position, false)
             selectedCount--
@@ -86,7 +86,7 @@ abstract class DataHolder<T, VH : RecyclerView.ViewHolder>() {
 
     fun toggleSelection(position: Int) {
         if (isSelected(position)) {
-            deselect(position)
+            deSelect(position)
         } else {
             select(position)
         }
