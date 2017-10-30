@@ -1,7 +1,7 @@
 package me.tuple.lily.core
 
-import android.app.Activity
-import android.app.Fragment
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleOwner
 import android.os.Handler
 import android.os.Looper
 import java.lang.ref.WeakReference
@@ -62,10 +62,12 @@ fun AsyncContext.runOnUI(action: () -> Unit) {
     }
 }
 
-fun <T> Any.async(action: AsyncContext.() -> T): Future<T> {
+fun <T> Any.async(action: AsyncContext.() -> T) {
     val asyncContext = AsyncContext(WeakReference(this))
-    return BackgroundExecutor.submit {
-        action.invoke(asyncContext)
+    BackgroundExecutor.submit {
+        if (!asyncContext.isDisposed) {
+            action.invoke(asyncContext)
+        }
     }
 }
 
@@ -74,13 +76,7 @@ class AsyncContext(val weakRef: WeakReference<Any>) {
     var isDisposed = false
         get() {
             val context = weakRef.get() ?: return true
-            if (context is Activity && context.isFinishing) {
-                return true
-            }
-            if (context is Fragment && context.isDetached) {
-                return true
-            }
-            if (context is SupportFragment && context.isDetached) {
+            if (context is LifecycleOwner && !context.isCreated()) {
                 return true
             }
             return false
@@ -99,3 +95,5 @@ internal object BackgroundExecutor {
 }
 
 fun safeSleep(mills: Long): Boolean = safeExecute { Thread.sleep(mills) }
+
+fun LifecycleOwner.isCreated(): Boolean = lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)

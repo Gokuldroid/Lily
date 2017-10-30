@@ -1,6 +1,7 @@
 package me.tuple.lily.core
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.ClipboardManager
 import android.content.Context
@@ -84,6 +85,7 @@ fun Context.openInPlayStore(packageName: String) {
     }
 }
 
+@SuppressLint("StaticFieldLeak")
 object Contexter {
     lateinit var context: Context
     val resources by lazy {
@@ -120,7 +122,7 @@ object Contexter {
     fun getInt(@IntegerRes intId: Int): Int = resources.getInteger(intId)
 
     fun getDrawable(@DrawableRes icDrawable: Int): Drawable =
-            ContextCompat.getDrawable(context, icDrawable)
+            ContextCompat.getDrawable(context, icDrawable)!!
 
     fun getDimensionPixelSize(@DimenRes dimensionId: Int) =
             resources.getDimensionPixelSize(dimensionId)

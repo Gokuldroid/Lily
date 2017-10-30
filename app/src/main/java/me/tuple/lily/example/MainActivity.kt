@@ -1,5 +1,7 @@
 package me.tuple.lily.example
 
+import android.arch.lifecycle.DefaultLifecycleObserver
+import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.IntentCompat
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var inn by intPreference("Hello")
+        lifecycle
         async {
             val result = safeExecute<String> { "Gokul" }
             runOnUI {

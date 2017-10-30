@@ -36,19 +36,19 @@ fun View?.setPadding(padding: Int) {
 
 fun <T : View> Activity.bind(@IdRes idRes: Int): Lazy<T> {
     @Suppress("UNCHECKED_CAST")
-    return unsafeLazy { findViewById(idRes) as T }
+    return unsafeLazy { findViewById<View>(idRes) as T }
 }
 
 fun <T : View> View.bind(@IdRes idRes: Int): Lazy<T> {
     @Suppress("UNCHECKED_CAST")
-    return unsafeLazy { findViewById(idRes) as T }
+    return unsafeLazy { findViewById<View>(idRes) as T }
 }
 
 @Suppress("UNCHECKED_CAST")
-fun <T : View> View.findById(@IdRes idRes: Int): T = findViewById(idRes) as T
+fun <T : View> View.findById(@IdRes idRes: Int): T = findViewById<View>(idRes) as T
 
 @Suppress("UNCHECKED_CAST")
-fun <T : View> Activity.findById(@IdRes idRes: Int): T = findViewById(idRes) as T
+fun <T : View> Activity.findById(@IdRes idRes: Int): T = findViewById<View>(idRes) as T
 
 fun Activity.onClick(@IdRes id: Int, function: (View) -> Unit): View {
     val view = findById<View>(id)
