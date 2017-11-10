@@ -2,6 +2,7 @@ package me.tuple.lily.core
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.ClipboardManager
 import android.content.Context
@@ -18,6 +19,7 @@ import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.LayoutInflater
+import kotlin.reflect.KClass
 
 
 /**
@@ -83,6 +85,12 @@ fun Context.openInPlayStore(packageName: String) {
     } catch (e: ActivityNotFoundException) {
         openInBrowser("http://play.google.com/store/apps/details?id=" + this.packageName)
     }
+}
+
+fun Context.startActivity(activity: KClass<out Activity>) {
+    val intent = Intent(this, activity.java)
+    intent.action = Intent.ACTION_MAIN
+    startActivity(intent)
 }
 
 @SuppressLint("StaticFieldLeak")
