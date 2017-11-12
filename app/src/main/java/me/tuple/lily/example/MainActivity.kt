@@ -1,13 +1,12 @@
 package me.tuple.lily.example
 
-import android.arch.lifecycle.DefaultLifecycleObserver
-import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.IntentCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import me.tuple.lily.core.*
+import me.tuple.lily.core.async
+import me.tuple.lily.core.bind
+import me.tuple.lily.core.runOnUI
+import me.tuple.lily.core.safeExecute
 import me.tuple.lily.utils.intPreference
 
 class MainActivity : AppCompatActivity() {
