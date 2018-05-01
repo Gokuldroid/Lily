@@ -86,7 +86,7 @@ class Toasty(private val context: Context) {
     }
 
     fun font(typeface: Typeface): Toasty {
-        this.typeFace = typeFace
+        this.typeFace = typeface
         return this
     }
 
@@ -160,30 +160,34 @@ fun toasty(message: String) {
     }.show()
 }
 
-fun toastyError(message: Int){
+fun toastyError(message: Int, custom: ((Toasty) -> Unit)? = null) {
     Toasty(Contexter.context).apply {
         icon(R.drawable.ic_alert_circle)
         message(message)
+        custom?.invoke(this)
     }.show()
 }
 
-fun toastyError(message: String){
+fun toastyError(message: String, custom: ((Toasty) -> Unit)? = null) {
     Toasty(Contexter.context).apply {
         message(message)
         icon(R.drawable.ic_alert_circle)
+        custom?.invoke(this)
     }.show()
 }
 
-fun toastySuccess(message: String){
+fun toastySuccess(message: String, custom: ((Toasty) -> Unit)? = null) {
     Toasty(Contexter.context).apply {
         message(message)
         icon(R.drawable.ic_check_circle)
+        custom?.invoke(this)
     }.show()
 }
 
-fun toastySuccess(message: Int){
+fun toastySuccess(message: Int, custom: ((Toasty) -> Unit)? = null) {
     Toasty(Contexter.context).apply {
         message(message)
         icon(R.drawable.ic_check_circle)
+        custom?.invoke(this)
     }.show()
 }

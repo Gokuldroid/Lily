@@ -55,6 +55,12 @@ abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) 
 
     fun getItem(position: Int): T = dataHolder.get(position)
 
+    fun setRecyclerView(recyclerView: RecyclerView): BaseRVAdapter<T> {
+        recyclerView.adapter = this
+        dataHolder.adapter = this
+        return this
+    }
+
     override fun getItemCount(): Int = dataHolder.size()
 }
 
@@ -72,5 +78,5 @@ interface OnLongClickListener<T> {
 }
 
 interface MultiSelectListener<T> {
-    fun onChange(dataHolder: DataHolder<T,out RVHolder<T>>)
+    fun onChange(dataHolder: DataHolder<T, out RVHolder<T>>)
 }

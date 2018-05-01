@@ -1,9 +1,13 @@
 package me.tuple.lily.core
 
 import android.app.Activity
+import android.content.Context
 import android.support.annotation.IdRes
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+
 
 /**
  * Created by LazyLoop.
@@ -60,4 +64,55 @@ fun View.onClick(@IdRes id: Int, function: (View) -> Unit) {
     findById<View>(id).setOnClickListener(function)
 }
 
-private fun <T> unsafeLazy(initializer: () -> T) = lazy(LazyThreadSafetyMode.NONE, initializer)
+fun View.getViewYPos(): Int {
+    val location = IntArray(2)
+    location[0] = 0
+    location[1] = this.y.toInt()
+    (this.parent as View).getLocationInWindow(location)
+    return location[1]
+}
+
+fun View.getViewXPos(): Int {
+    val location = IntArray(2)
+    location[0] = 0
+    location[1] = this.y.toInt()
+    (this.parent as View).getLocationInWindow(location)
+    return location[0]
+}
+
+fun View.getViewPos(): IntArray {
+    val location = IntArray(2)
+    location[0] = 0
+    location[1] = this.y.toInt()
+    (this.parent as View).getLocationInWindow(location)
+    return location
+}
+
+fun getWindowWidth(context: Context): Int {
+    val metrics = getDisplayMetrics(context)
+    return metrics.widthPixels
+}
+
+fun getWindowHeight(context: Context): Int {
+    val metrics = getDisplayMetrics(context)
+    return metrics.heightPixels
+}
+
+
+fun getWindowWidthInDp(context: Context): Float {
+    val metrics = getDisplayMetrics(context)
+    return metrics.widthPixels / metrics.density
+}
+
+fun getWindowHeightInDp(context: Context): Float {
+    val metrics = getDisplayMetrics(context)
+    return metrics.heightPixels / metrics.density
+}
+
+fun getDisplayMetrics(context: Context): DisplayMetrics {
+    val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val display = wm.defaultDisplay
+    val metrics = DisplayMetrics()
+    display.getMetrics(metrics)
+    return metrics
+}

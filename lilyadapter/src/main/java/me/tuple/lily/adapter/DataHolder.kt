@@ -10,7 +10,7 @@ import kotlin.collections.ArrayList
  * Created by LazyLoop.
  */
 abstract class DataHolder<T, VH : RecyclerView.ViewHolder>() {
-    lateinit var adapter: RecyclerView.Adapter<VH>
+    lateinit var adapter: BaseRVAdapter<T>
     var selectedCount: Int = 0
     var selectedItems: SparseBooleanArray = SparseBooleanArray();
     abstract fun get(position: Int): T

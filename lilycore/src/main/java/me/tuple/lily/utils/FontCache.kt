@@ -22,7 +22,7 @@ object FontCache {
         } else {
             var typeface: Typeface? = null
             safeExecute { typeface = Typeface.createFromAsset(Contexter.getAssets(), "fonts/" + font) }
-            fontCache.put(font!!, typeface ?: defaultFont)
+            fontCache[font!!] = typeface ?: defaultFont
             typeface ?: defaultFont
         }
     }

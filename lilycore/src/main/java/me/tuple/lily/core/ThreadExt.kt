@@ -4,6 +4,7 @@ import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleOwner
 import android.os.Handler
 import android.os.Looper
+import me.tuple.lilycore.BuildConfig
 import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -31,6 +32,9 @@ public inline fun safeExecute(action: () -> Unit): Boolean {
         action.invoke()
         true
     } catch (e: Exception) {
+        if (BuildConfig.DEBUG){
+            e.printStackTrace()
+        }
         false
     }
 }
@@ -97,3 +101,5 @@ internal object BackgroundExecutor {
 fun safeSleep(mills: Long): Boolean = safeExecute { Thread.sleep(mills) }
 
 fun LifecycleOwner.isCreated(): Boolean = lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)
+
+fun LifecycleOwner.isStarted(): Boolean = lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
