@@ -23,11 +23,11 @@ private val mainThread: Thread by lazy {
     Looper.getMainLooper().thread
 }
 
-public val Thread.isMainThread: Boolean
+val Thread.isMainThread: Boolean
     get() = this == mainThread
 
 
-public inline fun safeExecute(action: () -> Unit): Boolean {
+inline fun safeExecute(action: () -> Unit): Boolean {
     return try {
         action.invoke()
         true
@@ -39,7 +39,7 @@ public inline fun safeExecute(action: () -> Unit): Boolean {
     }
 }
 
-public inline fun <T> safeExecute(action: () -> T?): ExecutionResult<T> {
+inline fun <T> safeExecute(action: () -> T?): ExecutionResult<T> {
     return try {
         ExecutionResult(action.invoke(), null)
     } catch (e: Exception) {
