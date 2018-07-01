@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.target_sdk_version
-    buildToolsVersion rootProject.ext.build_tools_version
     defaultConfig {
         applicationId "me.tuple.lily.example"
         minSdkVersion 16
@@ -28,7 +27,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$support_lib"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //compile 'com.github.Gokuldroid.Lily:lilycore:master-SNAPSHOT'
     //compile 'com.github.Gokuldroid.Lily:lilypref:master-SNAPSHOT'
     //compile 'com.github.Gokuldroid.Lily:lilytoast:master-SNAPSHOT'
