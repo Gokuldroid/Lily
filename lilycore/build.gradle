@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
 
 group='com.github.gokuldroid'
 
@@ -37,13 +37,4 @@ dependencies {
 }
 repositories {
     mavenCentral()
-}
-
-publish {
-    userOrg = 'gokul'
-    groupId = group
-    artifactId = 'lilycore'
-    publishVersion = rootProject.ext.publish_version
-    website = 'https://github.com/gokuldroid/lily'
-    desc = 'Android core utils'
 }

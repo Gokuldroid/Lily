@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.github.gokuldroid'
+group='com.github.gokuldroid'
 
 android {
     compileSdkVersion rootProject.ext.complie_sdk_version
@@ -33,17 +33,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    //implementation 'com.github.Gokuldroid.Lily:lilycore:master-SNAPSHOT'
     implementation project(':lilycore')
 }
 repositories {
     mavenCentral()
-}
-
-publish {
-    userOrg = 'gokul'
-    groupId = group
-    artifactId = 'lilyperf'
-    publishVersion = rootProject.ext.publish_version
-    website = 'https://github.com/gokuldroid/lily'
-    desc = 'Android shared pref library'
 }
