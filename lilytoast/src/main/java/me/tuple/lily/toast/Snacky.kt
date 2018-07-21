@@ -28,7 +28,7 @@ import me.tuple.lily.utils.FontCache
 class Snacky : LinearLayout {
     private lateinit var activity: Activity
 
-    constructor(activity: Activity) : this(activity, null);
+    constructor(activity: Activity) : this(activity, null)
 
     private constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
     private constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {

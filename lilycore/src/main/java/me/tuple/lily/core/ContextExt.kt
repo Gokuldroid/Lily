@@ -12,6 +12,8 @@ import android.content.res.AssetManager
 import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.provider.Settings
 import android.support.annotation.*
@@ -19,6 +21,7 @@ import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.WindowManager
 import kotlin.reflect.KClass
 
 
@@ -32,13 +35,14 @@ val Context.layoutInflater: LayoutInflater
 val Context.clipboardManager: ClipboardManager
     get() = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
-fun Context.hasPermission(permission: String): Boolean {
-    return isApiBelow(AndroidVersion.M) || ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
-}
+val Context.windowManager: WindowManager
+    get() = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-fun Context.hasStoragePermission(): Boolean {
-    return hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-}
+fun Context.hasPermission(permission: String): Boolean =
+        isApiBelow(AndroidVersion.M) || ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+
+fun Context.hasStoragePermission(): Boolean =
+        hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 fun Context.hasSettingsPermission(): Boolean = hasPermission(Manifest.permission.WRITE_SETTINGS)
 
@@ -91,6 +95,48 @@ fun Context.startActivity(activity: KClass<out Activity>) {
     val intent = Intent(this, activity.java)
     intent.action = Intent.ACTION_MAIN
     startActivity(intent)
+}
+
+@RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
+fun Context.hasInternet(): Boolean {
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkInfo = connectivityManager.activeNetworkInfo
+    return networkInfo != null && networkInfo.isAvailable && networkInfo.isConnected
+}
+
+
+fun Context.isGPSEnabled(): Boolean {
+    val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+}
+
+
+fun Context.getWindowWidth(): Int {
+    val metrics = getDisplayMetrics()
+    return metrics.widthPixels
+}
+
+fun Context.getWindowHeight(): Int {
+    val metrics = getDisplayMetrics()
+    return metrics.heightPixels
+}
+
+
+fun Context.getWindowWidthInDp(): Float {
+    val metrics = getDisplayMetrics()
+    return metrics.widthPixels / metrics.density
+}
+
+fun Context.getWindowHeightInDp(): Float {
+    val metrics = getDisplayMetrics()
+    return metrics.heightPixels / metrics.density
+}
+
+fun Context.getDisplayMetrics(): DisplayMetrics {
+    val display = windowManager.defaultDisplay
+    val metrics = DisplayMetrics()
+    display.getMetrics(metrics)
+    return metrics
 }
 
 @SuppressLint("StaticFieldLeak")

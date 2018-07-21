@@ -87,32 +87,3 @@ fun View.getViewPos(): IntArray {
     (this.parent as View).getLocationInWindow(location)
     return location
 }
-
-fun getWindowWidth(context: Context): Int {
-    val metrics = getDisplayMetrics(context)
-    return metrics.widthPixels
-}
-
-fun getWindowHeight(context: Context): Int {
-    val metrics = getDisplayMetrics(context)
-    return metrics.heightPixels
-}
-
-
-fun getWindowWidthInDp(context: Context): Float {
-    val metrics = getDisplayMetrics(context)
-    return metrics.widthPixels / metrics.density
-}
-
-fun getWindowHeightInDp(context: Context): Float {
-    val metrics = getDisplayMetrics(context)
-    return metrics.heightPixels / metrics.density
-}
-
-fun getDisplayMetrics(context: Context): DisplayMetrics {
-    val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-    val display = wm.defaultDisplay
-    val metrics = DisplayMetrics()
-    display.getMetrics(metrics)
-    return metrics
-}

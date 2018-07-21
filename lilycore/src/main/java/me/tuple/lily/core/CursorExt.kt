@@ -41,41 +41,24 @@ open class CursorWrapper(val cursor: Cursor?){
         return Collections.emptyList<T>() as ArrayList<T>
     }
 
-    fun getBlob(column: String): ByteArray? {
-        return this.cursor!!.getBlob(columnIndexMap[column]!!)
-    }
+    fun getBlob(column: String): ByteArray? = this.cursor!!.getBlob(columnIndexMap[column]!!)
 
-    fun getString(column: String, defaultValue: String = ""): String {
-        return this.cursor!!.getString(columnIndexMap[column]!!) ?: defaultValue
-    }
+    fun getString(column: String, defaultValue: String = ""): String =
+            this.cursor!!.getString(columnIndexMap[column]!!) ?: defaultValue
 
-    fun getShort(column: String): Short {
-        return this.cursor!!.getShort(columnIndexMap[column]!!)
-    }
+    fun getShort(column: String): Short = this.cursor!!.getShort(columnIndexMap[column]!!)
 
-    fun getInt(column: String): Int {
-        return this.cursor!!.getInt(columnIndexMap[column]!!)
-    }
+    fun getInt(column: String): Int = this.cursor!!.getInt(columnIndexMap[column]!!)
 
-    fun getLong(column: String): Long {
-        return this.cursor!!.getLong(columnIndexMap[column]!!)
-    }
+    fun getLong(column: String): Long = this.cursor!!.getLong(columnIndexMap[column]!!)
 
-    fun getFloat(column: String): Float {
-        return this.cursor!!.getFloat(columnIndexMap[column]!!)
-    }
+    fun getFloat(column: String): Float = this.cursor!!.getFloat(columnIndexMap[column]!!)
 
-    fun getDouble(column: String): Double {
-        return this.cursor!!.getDouble(columnIndexMap[column]!!)
-    }
+    fun getDouble(column: String): Double = this.cursor!!.getDouble(columnIndexMap[column]!!)
 
-    fun isNull(column: String): Boolean {
-        return this.cursor!!.isNull(columnIndexMap[column]!!)
-    }
+    fun isNull(column: String): Boolean = this.cursor!!.isNull(columnIndexMap[column]!!)
 
     companion object {
-        fun from(cursor: Cursor?): CursorWrapper {
-            return CursorWrapper(cursor)
-        }
+        fun from(cursor: Cursor?): CursorWrapper = CursorWrapper(cursor)
     }
 }
