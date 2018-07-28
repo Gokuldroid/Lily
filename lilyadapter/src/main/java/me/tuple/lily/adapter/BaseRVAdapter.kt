@@ -65,7 +65,7 @@ abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) 
 }
 
 abstract class RVHolder<in T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun <V : View> findById(@IdRes id: Int): V = itemView.findById<V>(id)
+    fun <V : View> findById(@IdRes id: Int): V = itemView.findById(id)
     abstract fun bind(data: T)
 }
 

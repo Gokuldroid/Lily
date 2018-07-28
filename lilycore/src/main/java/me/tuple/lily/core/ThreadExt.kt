@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import me.tuple.lilycore.BuildConfig
 import java.lang.ref.WeakReference
+import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
@@ -32,7 +33,7 @@ inline fun safeExecute(action: () -> Unit): Boolean {
         action.invoke()
         true
     } catch (e: Exception) {
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             e.printStackTrace()
         }
         false
@@ -68,7 +69,20 @@ fun AsyncContext.runOnUI(action: () -> Unit) {
 
 fun <T> Any.async(action: AsyncContext.() -> T) {
     val asyncContext = AsyncContext(WeakReference(this))
-    BackgroundExecutor.submit {
+    AppExecutors.network.submit {
+        if (!asyncContext.isDisposed) {
+            action.invoke(asyncContext)
+        }
+    }
+}
+
+fun <T> Any.asyncNetwork(action: AsyncContext.() -> T) {
+    async(action)
+}
+
+fun <T> Any.asyncIO(action: AsyncContext.() -> T) {
+    val asyncContext = AsyncContext(WeakReference(this))
+    AppExecutors.io.submit {
         if (!asyncContext.isDisposed) {
             action.invoke(asyncContext)
         }
@@ -91,11 +105,14 @@ class AsyncContext(val weakRef: WeakReference<Any>) {
     }
 }
 
-internal object BackgroundExecutor {
-    private var executor: ExecutorService =
-            Executors.newScheduledThreadPool(2 * Runtime.getRuntime().availableProcessors())
+object AppExecutors {
+    val network = Executors.newFixedThreadPool(3)!!
+    val io = Executors.newSingleThreadExecutor()!!
+    val main = MainThreadExecutor()
+}
 
-    fun <T> submit(task: () -> T): Future<T> = executor.submit(task)
+class MainThreadExecutor {
+    fun submit(task: () -> Unit) = handler.post(task)
 }
 
 fun safeSleep(mills: Long): Boolean = safeExecute { Thread.sleep(mills) }
