@@ -38,6 +38,30 @@ fun View?.setPadding(padding: Int) {
     }
 }
 
+fun View?.setPaddingLeft(padding: Int) {
+    this?.apply {
+        this.setPadding(padding, paddingTop, paddingRight, paddingBottom)
+    }
+}
+
+fun View?.setPaddingTop(padding: Int) {
+    this?.apply {
+        this.setPadding(paddingLeft, padding, paddingRight, paddingBottom)
+    }
+}
+
+fun View?.setPaddingRight(padding: Int) {
+    this?.apply {
+        this.setPadding(paddingLeft, paddingTop, padding, paddingBottom)
+    }
+}
+
+fun View?.setPaddingBottom(padding: Int) {
+    this?.apply {
+        this.setPadding(paddingLeft, paddingTop, paddingRight, padding)
+    }
+}
+
 fun <T : View> Activity.bind(@IdRes idRes: Int): Lazy<T> {
     @Suppress("UNCHECKED_CAST")
     return unsafeLazy { findViewById<View>(idRes) as T }
