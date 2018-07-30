@@ -3,10 +3,7 @@ package me.tuple.lily.core
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ActivityNotFoundException
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import android.content.res.Resources
@@ -58,6 +55,12 @@ fun Context.openAppDetails() {
     i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
     i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
     startActivity(i)
+}
+
+fun Context.copyToClipBoard(label: String, text: String) {
+    val clipboard = clipboardManager
+    val clip = ClipData.newPlainText(label, text)
+    clipboard.primaryClip = clip
 }
 
 fun Context.openInBrowser(url: String) {
