@@ -150,34 +150,52 @@ class Prefs(context: Context, name: String) {
 val Context.defaultPreference: Prefs
     get() = Prefs.fromDefault()
 
-inline fun <reified T, P> delegate(key: String, defaultValue: T, prefs: Prefs): ReadWriteProperty<P, T> =
-        object : ReadWriteProperty<P, T> {
-            override fun getValue(thisRef: P, property: KProperty<*>): T =
-                    when (T::class) {
-                        String::class -> prefs.getString(key, defaultValue as? String) as T
-                        java.lang.Integer::class -> prefs.getInt(key, defaultValue as? Int ?: 0) as T
-                        java.lang.Boolean::class -> prefs.getBoolean(key, defaultValue as? Boolean ?: false) as T
-                        java.lang.Float::class -> prefs.getFloat(key, defaultValue as? Float ?: 0f) as T
-                        java.lang.Long::class -> prefs.getLong(key, defaultValue as? Long ?: 0L) as T
-                        else -> throw UnsupportedOperationException("Not yet implemented")
-                    }
+fun <P> stringPreference(key: String, defaultValue: String? = null): ReadWriteProperty<P, String?> =
+        object : ReadWriteProperty<P, String?> {
+            override fun getValue(thisRef: P, property: KProperty<*>): String? =
+                    Prefs.fromDefault().getString(key, defaultValue)
 
-            override fun setValue(thisRef: P, property: KProperty<*>, value: T) {
+            override fun setValue(thisRef: P, property: KProperty<*>, value: String?) {
                 Prefs[key] = value
             }
         }
 
-fun <P> stringPreference(key: String, defaultValue: String? = null): ReadWriteProperty<P, String?> =
-        delegate<String?, P>(key, defaultValue, Prefs.fromDefault())
-
 fun <P> intPreference(key: String, defaultValue: Int = 0): ReadWriteProperty<P, Int> =
-        delegate<Int, P>(key, defaultValue, Prefs.fromDefault())
+        object : ReadWriteProperty<P, Int> {
+            override fun getValue(thisRef: P, property: KProperty<*>): Int =
+                    Prefs.fromDefault().getInt(key, defaultValue)
+
+            override fun setValue(thisRef: P, property: KProperty<*>, value: Int) {
+                Prefs[key] = value
+            }
+        }
 
 fun <P> booleanPreference(key: String, defaultValue: Boolean = false): ReadWriteProperty<P, Boolean> =
-        delegate<Boolean, P>(key, defaultValue, Prefs.fromDefault())
+        object : ReadWriteProperty<P, Boolean> {
+            override fun getValue(thisRef: P, property: KProperty<*>): Boolean =
+                    Prefs.fromDefault().getBoolean(key, defaultValue)
+
+            override fun setValue(thisRef: P, property: KProperty<*>, value: Boolean) {
+                Prefs[key] = value
+            }
+        }
 
 fun <P> floatPreference(key: String, defaultValue: Float = 0f): ReadWriteProperty<P, Float> =
-        delegate<Float, P>(key, defaultValue, Prefs.fromDefault())
+        object : ReadWriteProperty<P, Float> {
+            override fun getValue(thisRef: P, property: KProperty<*>): Float =
+                    Prefs.fromDefault().getFloat(key, defaultValue)
+
+            override fun setValue(thisRef: P, property: KProperty<*>, value: Float) {
+                Prefs[key] = value
+            }
+        }
 
 fun <P> longPreference(key: String, defaultValue: Long = 0L): ReadWriteProperty<P, Long> =
-        delegate<Long, P>(key, defaultValue, Prefs.fromDefault())
+        object : ReadWriteProperty<P, Long> {
+            override fun getValue(thisRef: P, property: KProperty<*>): Long =
+                    Prefs.fromDefault().getLong(key, defaultValue)
+
+            override fun setValue(thisRef: P, property: KProperty<*>, value: Long) {
+                Prefs[key] = value
+            }
+        }
