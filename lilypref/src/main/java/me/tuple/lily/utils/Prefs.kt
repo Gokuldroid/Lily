@@ -150,52 +150,52 @@ class Prefs(context: Context, name: String) {
 val Context.defaultPreference: Prefs
     get() = Prefs.fromDefault()
 
-fun <P> stringPreference(key: String, defaultValue: String? = null): ReadWriteProperty<P, String?> =
+fun <P> stringPreference(key: String, defaultValue: String? = null, prefs: Prefs = Prefs.fromDefault()): ReadWriteProperty<P, String?> =
         object : ReadWriteProperty<P, String?> {
             override fun getValue(thisRef: P, property: KProperty<*>): String? =
-                    Prefs.fromDefault().getString(key, defaultValue)
+                    prefs.getString(key, defaultValue)
 
             override fun setValue(thisRef: P, property: KProperty<*>, value: String?) {
-                Prefs[key] = value
+                prefs[key] = value
             }
         }
 
-fun <P> intPreference(key: String, defaultValue: Int = 0): ReadWriteProperty<P, Int> =
+fun <P> intPreference(key: String, defaultValue: Int = 0, prefs: Prefs = Prefs.fromDefault()): ReadWriteProperty<P, Int> =
         object : ReadWriteProperty<P, Int> {
             override fun getValue(thisRef: P, property: KProperty<*>): Int =
-                    Prefs.fromDefault().getInt(key, defaultValue)
+                    prefs.getInt(key, defaultValue)
 
             override fun setValue(thisRef: P, property: KProperty<*>, value: Int) {
-                Prefs[key] = value
+                prefs[key] = value
             }
         }
 
-fun <P> booleanPreference(key: String, defaultValue: Boolean = false): ReadWriteProperty<P, Boolean> =
+fun <P> booleanPreference(key: String, defaultValue: Boolean = false, prefs: Prefs = Prefs.fromDefault()): ReadWriteProperty<P, Boolean> =
         object : ReadWriteProperty<P, Boolean> {
             override fun getValue(thisRef: P, property: KProperty<*>): Boolean =
-                    Prefs.fromDefault().getBoolean(key, defaultValue)
+                   prefs.getBoolean(key, defaultValue)
 
             override fun setValue(thisRef: P, property: KProperty<*>, value: Boolean) {
-                Prefs[key] = value
+                prefs[key] = value
             }
         }
 
-fun <P> floatPreference(key: String, defaultValue: Float = 0f): ReadWriteProperty<P, Float> =
+fun <P> floatPreference(key: String, defaultValue: Float = 0f, prefs: Prefs = Prefs.fromDefault()): ReadWriteProperty<P, Float> =
         object : ReadWriteProperty<P, Float> {
             override fun getValue(thisRef: P, property: KProperty<*>): Float =
-                    Prefs.fromDefault().getFloat(key, defaultValue)
+                    prefs.getFloat(key, defaultValue)
 
             override fun setValue(thisRef: P, property: KProperty<*>, value: Float) {
-                Prefs[key] = value
+                prefs[key] = value
             }
         }
 
-fun <P> longPreference(key: String, defaultValue: Long = 0L): ReadWriteProperty<P, Long> =
+fun <P> longPreference(key: String, defaultValue: Long = 0L, prefs: Prefs = Prefs.fromDefault()): ReadWriteProperty<P, Long> =
         object : ReadWriteProperty<P, Long> {
             override fun getValue(thisRef: P, property: KProperty<*>): Long =
-                    Prefs.fromDefault().getLong(key, defaultValue)
+                    prefs.getLong(key, defaultValue)
 
             override fun setValue(thisRef: P, property: KProperty<*>, value: Long) {
-                Prefs[key] = value
+                prefs[key] = value
             }
         }
