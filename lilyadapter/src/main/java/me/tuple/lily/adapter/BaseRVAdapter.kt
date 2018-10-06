@@ -30,6 +30,9 @@ abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) 
                 unless(isDisabled) {
                     if (dataHolder.isEmptySelection) {
                         val adapterPosition = holder.adapterPosition
+                        if (adapterPosition == RecyclerView.NO_POSITION) {
+                            return@setOnClickListener
+                        }
                         if (this.onClick(getItem(adapterPosition), adapterPosition)) {
                             notifyItemChanged(adapterPosition)
                         }
@@ -44,6 +47,9 @@ abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) 
             holder.itemView.setOnLongClickListener {
                 unless(isDisabled) {
                     val adapterPosition = holder.adapterPosition
+                    if (adapterPosition == RecyclerView.NO_POSITION) {
+                        return@setOnLongClickListener true
+                    }
                     this.onLongClick(getItem(adapterPosition), adapterPosition)
                     dataHolder.toggleSelection(adapterPosition)
                     multiSelectListener?.onChange(dataHolder)
