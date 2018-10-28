@@ -106,9 +106,9 @@ class AsyncContext(val weakRef: WeakReference<Any>) {
 }
 
 object AppExecutors {
-    val network = Executors.newFixedThreadPool(3)!!
-    val io = Executors.newSingleThreadExecutor()!!
-    val main = MainThreadExecutor()
+    val network: ExecutorService = Executors.newFixedThreadPool(3)
+    val io: ExecutorService = Executors.newSingleThreadExecutor()
+    val main: MainThreadExecutor = MainThreadExecutor()
 }
 
 class MainThreadExecutor {
