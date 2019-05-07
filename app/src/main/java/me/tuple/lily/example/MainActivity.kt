@@ -8,6 +8,7 @@ import me.tuple.lily.core.async
 import me.tuple.lily.core.bind
 import me.tuple.lily.core.runOnUI
 import me.tuple.lily.core.safeExecute
+import me.tuple.lily.toast.toasty
 import me.tuple.lily.utils.booleanPreference
 import me.tuple.lily.utils.intPreference
 
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d("Main", "" + deom)
+        button.setOnClickListener {
+            toasty("Hello")
+        }
     }
 }

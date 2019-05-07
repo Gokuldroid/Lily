@@ -56,13 +56,7 @@ class ExecutionResult<out T>(val result: T?, private val exception: Exception?) 
 fun AsyncContext.runOnUI(action: () -> Unit) {
     weakRef.get()?.also {
         if (!isDisposed) {
-            if (Thread.currentThread().isMainThread) {
-                action()
-            } else {
-                handler.post {
-                    action()
-                }
-            }
+            AppExecutors.main.submit(action)
         }
     }
 }
@@ -112,7 +106,13 @@ object AppExecutors {
 }
 
 class MainThreadExecutor {
-    fun submit(task: () -> Unit) = handler.post(task)
+    fun submit(task: () -> Unit) {
+        if (Thread.currentThread().isMainThread) {
+            task()
+        } else {
+            handler.post(task)
+        }
+    }
 }
 
 fun safeSleep(mills: Long): Boolean = safeExecute { Thread.sleep(mills) }
