@@ -10,10 +10,10 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion rootProject.ext.target_sdk_version
-        versionCode 1
-        versionName "1.0"
+        versionCode rootProject.ext.version_code
+        versionName rootProject.ext.version_name
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -26,10 +26,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation "com.android.support:appcompat-v7:$support_lib"
+    implementation "androidx.appcompat:appcompat:$support_lib"
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"

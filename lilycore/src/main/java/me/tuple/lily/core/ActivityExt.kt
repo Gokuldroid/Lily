@@ -3,10 +3,10 @@ package me.tuple.lily.core
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.support.annotation.IdRes
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.IdRes
+import androidx.fragment.app.FragmentTransaction
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * Created by LazyLoop.
@@ -20,7 +20,7 @@ fun Activity.sendMail(chooserTitle: String, email: String, subject: String, body
     this.startActivity(Intent.createChooser(intent, chooserTitle))
 }
 
-inline fun AppCompatActivity.supportFragmentTransaction(receiver: FragmentTransaction.() -> Unit) {
+inline fun AppCompatActivity.supportFragmentTransaction(receiver: androidx.fragment.app.FragmentTransaction.() -> Unit) {
     supportFragmentManager.beginTransaction().apply(receiver).commit()
 }
 

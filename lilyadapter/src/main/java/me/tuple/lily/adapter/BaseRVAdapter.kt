@@ -1,7 +1,7 @@
 package me.tuple.lily.adapter
 
-import android.support.annotation.IdRes
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.IdRes
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import me.tuple.lily.core.findById
 import me.tuple.lily.core.unless
@@ -9,7 +9,7 @@ import me.tuple.lily.core.unless
 /**
  * Created by LazyLoop.
  */
-abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) : RecyclerView.Adapter<RVHolder<T>>() {
+abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) : androidx.recyclerview.widget.RecyclerView.Adapter<RVHolder<T>>() {
     var isDisabled: Boolean = false
     var onClickListener: OnClickListener<T>? = null
     var onLongClickListener: OnLongClickListener<T>? = null
@@ -30,7 +30,7 @@ abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) 
                 unless(isDisabled) {
                     if (dataHolder.isEmptySelection) {
                         val adapterPosition = holder.adapterPosition
-                        if (adapterPosition == RecyclerView.NO_POSITION) {
+                        if (adapterPosition == androidx.recyclerview.widget.RecyclerView.NO_POSITION) {
                             return@setOnClickListener
                         }
                         if (this.onClick(getItem(adapterPosition), adapterPosition)) {
@@ -47,7 +47,7 @@ abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) 
             holder.itemView.setOnLongClickListener {
                 unless(isDisabled) {
                     val adapterPosition = holder.adapterPosition
-                    if (adapterPosition == RecyclerView.NO_POSITION) {
+                    if (adapterPosition == androidx.recyclerview.widget.RecyclerView.NO_POSITION) {
                         return@setOnLongClickListener true
                     }
                     this.onLongClick(getItem(adapterPosition), adapterPosition)
@@ -61,7 +61,7 @@ abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) 
 
     fun getItem(position: Int): T = dataHolder.get(position)
 
-    fun setRecyclerView(recyclerView: RecyclerView): BaseRVAdapter<T> {
+    fun setRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView): BaseRVAdapter<T> {
         recyclerView.adapter = this
         dataHolder.adapter = this
         return this
@@ -70,7 +70,7 @@ abstract class BaseRVAdapter<T>(val dataHolder: DataHolder<T, out RVHolder<T>>) 
     override fun getItemCount(): Int = dataHolder.size()
 }
 
-abstract class RVHolder<in T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+abstract class RVHolder<in T>(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
     fun <V : View> findById(@IdRes id: Int): V = itemView.findById(id)
     abstract fun bind(data: T)
 }

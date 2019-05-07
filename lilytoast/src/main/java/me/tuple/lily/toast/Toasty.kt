@@ -3,8 +3,8 @@ package me.tuple.lily.toast
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
-import android.support.annotation.*
-import android.support.v7.widget.CardView
+import androidx.annotation.*
+import androidx.cardview.widget.CardView
 import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
@@ -119,7 +119,7 @@ class Toasty(private val context: Context) {
         val view = inflater.inflate(R.layout.toasty_layout, null)
         toast.view = view
         with(view) {
-            findById<CardView>(R.id.toast_bg).apply {
+            findById<androidx.cardview.widget.CardView>(R.id.toast_bg).apply {
                 setCardBackgroundColor(this@Toasty.background!!)
             }
 

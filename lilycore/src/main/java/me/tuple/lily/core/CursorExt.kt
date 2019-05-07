@@ -1,7 +1,7 @@
 package me.tuple.lily.core
 
 import android.database.Cursor
-import android.support.v4.util.ArrayMap
+import androidx.collection.ArrayMap
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -11,7 +11,7 @@ import kotlin.collections.ArrayList
 
 open class CursorWrapper(val cursor: Cursor?){
 
-    private val columnIndexMap: ArrayMap<String, Int> = ArrayMap()
+    private val columnIndexMap: androidx.collection.ArrayMap<String, Int> = androidx.collection.ArrayMap()
 
     init {
         cursor?.apply {

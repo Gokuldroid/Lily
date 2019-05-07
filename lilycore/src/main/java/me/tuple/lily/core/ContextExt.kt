@@ -13,8 +13,8 @@ import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.provider.Settings
-import android.support.annotation.*
-import android.support.v4.content.ContextCompat
+import androidx.annotation.*
+import androidx.core.content.ContextCompat
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.LayoutInflater

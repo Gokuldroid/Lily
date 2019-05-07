@@ -1,7 +1,7 @@
 package me.tuple.lily.core
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import android.os.Handler
 import android.os.Looper
 import me.tuple.lilycore.BuildConfig
@@ -10,7 +10,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
-import android.support.v4.app.Fragment as SupportFragment
+import androidx.fragment.app.Fragment as SupportFragment
 
 /**
  * Created by LazyLoop.

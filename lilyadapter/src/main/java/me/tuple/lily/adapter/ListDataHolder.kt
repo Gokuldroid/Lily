@@ -1,11 +1,11 @@
 package me.tuple.lily.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by LazyLoop.
  */
-open class ListDataHolder<T, VH : RecyclerView.ViewHolder>(private var data: MutableList<T>) : DataHolder<T, VH>() {
+open class ListDataHolder<T, VH : androidx.recyclerview.widget.RecyclerView.ViewHolder>(private var data: MutableList<T>) : DataHolder<T, VH>() {
 
     override fun get(position: Int): T = data[position]
 
