@@ -8,7 +8,7 @@ import me.tuple.lily.toast.Toasty
  * Created by LazyLoop.
  */
 
-public class App:Application(){
+class App:Application(){
     override fun onCreate() {
         super.onCreate()
         Contexter.init(applicationContext)

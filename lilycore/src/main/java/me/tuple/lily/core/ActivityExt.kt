@@ -20,7 +20,7 @@ fun Activity.sendMail(chooserTitle: String, email: String, subject: String, body
     this.startActivity(Intent.createChooser(intent, chooserTitle))
 }
 
-inline fun AppCompatActivity.supportFragmentTransaction(receiver: androidx.fragment.app.FragmentTransaction.() -> Unit) {
+inline fun AppCompatActivity.supportFragmentTransaction(receiver: FragmentTransaction.() -> Unit) {
     supportFragmentManager.beginTransaction().apply(receiver).commit()
 }
 

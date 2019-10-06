@@ -50,7 +50,7 @@ fun Context.openAppDetails() {
     val i = Intent()
     i.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
     i.addCategory(Intent.CATEGORY_DEFAULT)
-    i.data = Uri.parse("package:" + packageName)
+    i.data = Uri.parse("package:$packageName")
     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
     i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
@@ -83,14 +83,14 @@ fun Context.getVersionName(): String {
 }
 
 fun Context.openInPlayStore(packageName: String) {
-    val uri = Uri.parse("market://details?id=" + packageName)
+    val uri = Uri.parse("market://details?id=$packageName")
     val goToMarket = Intent(Intent.ACTION_VIEW, uri)
     goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
             Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
     try {
         this.startActivity(goToMarket)
     } catch (e: ActivityNotFoundException) {
-        openInBrowser("http://play.google.com/store/apps/details?id=" + this.packageName)
+        openInBrowser("http://play.google.com/store/apps/details?id=${this.packageName}")
     }
 }
 
