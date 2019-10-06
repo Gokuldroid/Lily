@@ -14,23 +14,23 @@ import org.gradle.plugin.use.PluginDependencySpec
 object Versions {
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.6.4"
 
-    const val com_android_tools_build_gradle: String = "3.4.2" // available: "3.5.1"
+    const val com_android_tools_build_gradle: String = "3.5.1"
 
-    const val android_maven_gradle_plugin: String = "1.5" // available: "2.1"
+    const val android_maven_gradle_plugin: String = "2.1"
 
-    const val org_jetbrains_kotlin: String = "1.3.31" // available: "1.3.50"
+    const val org_jetbrains_kotlin: String = "1.3.50"
 
-    const val lifecycle_compiler: String = "2.0.0" // available: "2.1.0"
+    const val lifecycle_compiler: String = "2.1.0"
 
     const val constraintlayout: String = "1.1.3"
 
-    const val espresso_core: String = "3.1.0" // available: "3.2.0"
+    const val espresso_core: String = "3.2.0"
 
     const val recyclerview: String = "1.0.0"
 
-    const val lint_gradle: String = "26.4.2" // available: "26.5.1"
+    const val lint_gradle: String = "26.5.1"
 
-    const val appcompat: String = "1.0.2" // available: "1.1.0"
+    const val appcompat: String = "1.1.0"
 
     const val cardview: String = "1.0.0"
 
