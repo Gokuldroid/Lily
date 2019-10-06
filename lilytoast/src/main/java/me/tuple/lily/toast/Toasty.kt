@@ -4,11 +4,12 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.annotation.*
-import androidx.cardview.widget.CardView
 import android.util.TypedValue
+import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import me.tuple.lily.R
 import me.tuple.lily.core.*
 import me.tuple.lily.utils.FontCache
@@ -118,8 +119,9 @@ class Toasty(private val context: Context) {
         val inflater = context.layoutInflater
         val view = inflater.inflate(R.layout.toasty_layout, null)
         toast.view = view
+        toast.setGravity(Gravity.BOTTOM or Gravity.FILL_HORIZONTAL, 16.dpToPx(), 16.dpToPx())
         with(view) {
-            findById<androidx.cardview.widget.CardView>(R.id.toast_bg).apply {
+            findById<CardView>(R.id.toast_bg).apply {
                 setCardBackgroundColor(this@Toasty.background!!)
             }
 

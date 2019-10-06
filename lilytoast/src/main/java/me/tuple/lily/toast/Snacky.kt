@@ -26,7 +26,7 @@ import me.tuple.lily.utils.FontCache
  */
 
 class Snacky : LinearLayout {
-    private lateinit var activity: Activity
+    private var activity: Activity
 
     constructor(activity: Activity) : this(activity, null)
 
@@ -200,7 +200,7 @@ class Snacky : LinearLayout {
         with(snackyView) {
             setBackgroundColor(this@Snacky.background!!)
             if (layoutGravity == Gravity.TOP) {
-                val params = layoutParams as LinearLayout.LayoutParams
+                val params = layoutParams as LayoutParams
                 params.gravity = Gravity.TOP
                 layoutParams = params
             } else {
