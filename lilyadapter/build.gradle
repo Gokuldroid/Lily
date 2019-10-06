@@ -26,15 +26,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation "androidx.appcompat:appcompat:$support_lib"
-    implementation "androidx.recyclerview:recyclerview:$recyclar_view_lib"
-    testImplementation 'junit:junit:4.12'
+    androidTestImplementation(Libs.espresso_core)
+    implementation Libs.appcompat
+    implementation Libs.recyclerview
+    testImplementation Libs.junit
     implementation project(':lilycore')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation Libs.kotlin_stdlib_jdk7
 }
+
 repositories {
     mavenCentral()
 }

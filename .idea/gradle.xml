@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/lilyadapter" />
             <option value="$PROJECT_DIR$/lilycore" />
             <option value="$PROJECT_DIR$/lilypref" />

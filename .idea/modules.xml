@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Lily.iml" filepath="$PROJECT_DIR$/.idea/Lily.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/buildSrc/buildSrc.iml" filepath="$PROJECT_DIR$/buildSrc/buildSrc.iml" />
       <module fileurl="file://$PROJECT_DIR$/lilyadapter/lilyadapter.iml" filepath="$PROJECT_DIR$/lilyadapter/lilyadapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/lilycore/lilycore.iml" filepath="$PROJECT_DIR$/lilycore/lilycore.iml" />
       <module fileurl="file://$PROJECT_DIR$/lilypref/lilypref.iml" filepath="$PROJECT_DIR$/lilypref/lilypref.iml" />
