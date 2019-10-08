@@ -21,14 +21,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation "androidx.appcompat:appcompat:$support_lib"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation "com.google.android.material:material:$material_version"
-    testImplementation 'junit:junit:4.12'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    androidTestImplementation(Libs.espresso_core)
+    implementation Libs.appcompat
+    implementation Libs.constraintlayout
+    implementation Libs.material
+    testImplementation Libs.junit
+    implementation Libs.kotlin_stdlib_jdk7
     //compile 'com.github.Gokuldroid.Lily:lilycore:master-SNAPSHOT'
     //compile 'com.github.Gokuldroid.Lily:lilypref:master-SNAPSHOT'
     //compile 'com.github.Gokuldroid.Lily:lilytoast:master-SNAPSHOT'
